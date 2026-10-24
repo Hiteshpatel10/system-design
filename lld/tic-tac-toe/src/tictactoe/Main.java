@@ -13,7 +13,8 @@ public class Main{
         Player alice = new Player("Alice", 'X');
         Player bob = new Player("Bob", 'O');
         Player[] players = new Player[]{alice, bob};
-        GameController controller = new GameController(3, players);
+        Moves moves = new Moves();  
+        GameController controller = new GameController(3, players, moves);
 
         controller.start(scanner);
 

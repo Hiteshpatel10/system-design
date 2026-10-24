@@ -54,6 +54,10 @@ public class Board{
         Player p = cells[row][col].getPlayer();
         return p == null ? '-' : p.getSymbol();
     }
+
+    public void setCellPlayer(int row, int col, Player player){
+        cells[row][col].setPlayer(player);
+    }
         
     public void printBoard(){
         for(int i=0;i<size;i++){
