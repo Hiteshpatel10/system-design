@@ -1,5 +1,7 @@
 package tictactoe;
 
+import tictactoe.player.Player;
+
 
 public class WinCheck {
 

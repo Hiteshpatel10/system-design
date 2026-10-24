@@ -1,6 +1,7 @@
 package tictactoe;
 
 import java.util.*;
+import tictactoe.player.*;
 
 
 public class Main{
@@ -10,8 +11,8 @@ public class Main{
 
         Scanner scanner = new Scanner(System.in);
 
-        Player alice = new Player("Alice", 'X');
-        Player bob = new Player("Bob", 'O');
+        Player alice = new Human("Alice", 'X');
+        Player bob = new Bot("Bob", 'O');
         Player[] players = new Player[]{alice, bob};
         Moves moves = new Moves();  
         GameController controller = new GameController(3, players, moves);

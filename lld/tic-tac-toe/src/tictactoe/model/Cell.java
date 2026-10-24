@@ -1,16 +1,15 @@
-package tictactoe;
+package tictactoe.model;
+
+import tictactoe.player.Player;
 
 
-public class Cell{
+public class Cell extends Move{
 
-    private int row;
-    private int col;
     private Player player;
 
 
     public Cell(int row, int col){
-        this.row = row;
-        this.col = col;
+        super(row, col);
         this.player = null;
     }
 
@@ -28,15 +27,5 @@ public class Cell{
 
     public boolean isEmpty(){
         return player == null;
-    }
-
-
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
     }
 }

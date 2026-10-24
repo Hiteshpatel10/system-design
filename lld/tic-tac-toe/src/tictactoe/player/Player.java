@@ -1,11 +1,14 @@
-package tictactoe;
+package tictactoe.player;
 
-public class Player{
+import java.util.Scanner; 
+import tictactoe.model.Move;
+
+public abstract class Player{
 
     private String name;
     private char symbol;
 
-    Player(String name, char symbol){
+    protected Player(String name, char symbol){
         this.name = name;
         this.symbol = symbol;
     }
@@ -17,4 +20,6 @@ public class Player{
     public char getSymbol(){
         return symbol;
     }
+
+    public abstract Move getMove(Scanner scanner);
 }

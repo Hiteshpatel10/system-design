@@ -2,6 +2,8 @@ package tictactoe;
 
 import tictactoe.enums.GameStatus;
 import java.util.Scanner;
+import tictactoe.player.Player;
+import tictactoe.model.*;
 
 public class GameController{
 
@@ -66,19 +68,18 @@ public class GameController{
     }
 
     public void start(Scanner scanner){
-
+        System.out.println("U = Undo");
         while(gameStatus == GameStatus.IN_PROGRESS){
             System.out.println("Current Player: " + getCurrentPlayer().getName());
-            System.out.println("Enter row and column U = Undo");
+        
             String input = scanner.nextLine();
             String[] parts = input.split(" ");
             if(parts[0].equals("U")){
                 undo();
                 continue;
             }
-            int row = Integer.parseInt(parts[0]);
-            int col = Integer.parseInt(parts[1]);
-            move(row, col);
+            Move move = getCurrentPlayer().getMove(scanner);
+            move(move.getRow(), move.getCol());
             board.printBoard();
         }
     }

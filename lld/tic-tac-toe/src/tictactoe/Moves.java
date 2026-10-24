@@ -2,7 +2,7 @@ package tictactoe;
 
 import java.util.Deque;
 import java.util.ArrayDeque;
-import tictactoe.Cell;
+import tictactoe.model.Cell;
 
 public class Moves{
 
