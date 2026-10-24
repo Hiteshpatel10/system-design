@@ -11,8 +11,8 @@ public class Main{
 
         Scanner scanner = new Scanner(System.in);
 
-        Player alice = new Human("Alice", 'X');
-        Player bob = new Bot("Bob", 'O');
+        Player alice = new Human("Hitesh", 'X', scanner);
+        Player bob = new Bot("BOT", 'O');
         Player[] players = new Player[]{alice, bob};
         Moves moves = new Moves();  
         GameController controller = new GameController(3, players, moves);

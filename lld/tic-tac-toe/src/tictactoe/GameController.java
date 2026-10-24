@@ -4,6 +4,7 @@ import tictactoe.enums.GameStatus;
 import java.util.Scanner;
 import tictactoe.player.Player;
 import tictactoe.model.*;
+import tictactoe.enums.PlayerType;
 
 public class GameController{
 
@@ -41,7 +42,7 @@ public class GameController{
             return;
         }
 
-        moves.add(row, col);
+        moves.add(row, col, currentPlayer);
         
         if(winCheck.isWinner(currentPlayer)){
             System.out.println("Winner: " + currentPlayer.getName());
@@ -63,6 +64,7 @@ public class GameController{
         currentPlayerIdx = (currentPlayerIdx + 1) % player.length;
     }
 
+
     private Player getCurrentPlayer(){
         return player[currentPlayerIdx];
     }
@@ -71,14 +73,21 @@ public class GameController{
         System.out.println("U = Undo");
         while(gameStatus == GameStatus.IN_PROGRESS){
             System.out.println("Current Player: " + getCurrentPlayer().getName());
-        
-            String input = scanner.nextLine();
-            String[] parts = input.split(" ");
-            if(parts[0].equals("U")){
+            Move move = getCurrentPlayer().getMove(board);
+
+         
+
+
+            if(move == Move.UNDO){
                 undo();
+                while(!moves.isEmpty() && getCurrentPlayer().getPlayerType() == PlayerType.BOT){
+                    undo();
+                }
+
+                board.printBoard();
                 continue;
             }
-            Move move = getCurrentPlayer().getMove(scanner);
+
             move(move.getRow(), move.getCol());
             board.printBoard();
         }
@@ -92,13 +101,22 @@ public class GameController{
             return;
         }
 
-        Cell lastMove = moves.pop();
-        currentPlayerIdx = (currentPlayerIdx + player.length - 1) % player.length;
+        Move lastMove = moves.pop();
+        currentPlayerIdx = indexOf(lastMove.getPlayer());
         board.setCellPlayer(lastMove.getRow(), lastMove.getCol(), null);
         this.gameStatus = GameStatus.IN_PROGRESS;
         
         
     }
+
+    private int indexOf(Player p){
+    for(int i = 0; i < player.length; i++){
+        if(player[i] == p){
+            return i;
+        }
+    }
+    throw new IllegalStateException("Player not in this game: " + p.getName());
+}
         
     
 }

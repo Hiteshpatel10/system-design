@@ -2,25 +2,26 @@ package tictactoe;
 
 import java.util.Deque;
 import java.util.ArrayDeque;
-import tictactoe.model.Cell;
+import tictactoe.model.Move;
+import tictactoe.player.Player;
 
 public class Moves{
 
-    private Deque<Cell> moves;
+    private Deque<Move> moves;
 
     Moves(){
         this.moves = new ArrayDeque<>();
     }
 
-    public void add(int row, int col){
-        moves.push(new Cell(row, col));
+    public void add(int row, int col, Player player){
+        moves.push(new Move(row, col, player));
     }
 
-    public Cell top(){
+    public Move top(){
         return moves.peek();
     }
 
-    public Cell pop(){
+    public Move pop(){
         return moves.pop();
     }
     

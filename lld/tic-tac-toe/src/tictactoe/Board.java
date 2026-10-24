@@ -1,6 +1,6 @@
 package tictactoe;
 
-import tictactoe.model.Cell;
+import tictactoe.model.*;
 import tictactoe.player.Player;
 
 public class Board{

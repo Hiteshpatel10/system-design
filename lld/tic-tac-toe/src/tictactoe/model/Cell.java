@@ -3,14 +3,24 @@ package tictactoe.model;
 import tictactoe.player.Player;
 
 
-public class Cell extends Move{
+public class Cell {
 
     private Player player;
-
+    private int row;
+    private int col;
 
     public Cell(int row, int col){
-        super(row, col);
+        this.row = row;
+        this.col = col;
         this.player = null;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
     }
 
     public Player getPlayer(){

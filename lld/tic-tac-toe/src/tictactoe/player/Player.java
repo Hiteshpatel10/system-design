@@ -2,15 +2,19 @@ package tictactoe.player;
 
 import java.util.Scanner; 
 import tictactoe.model.Move;
+import tictactoe.Board;
+import tictactoe.enums.PlayerType;
 
 public abstract class Player{
 
     private String name;
     private char symbol;
+    private PlayerType playerType;
 
-    protected Player(String name, char symbol){
+    protected Player(String name, char symbol, PlayerType playerType){
         this.name = name;
         this.symbol = symbol;
+        this.playerType = playerType;
     }
 
     public String getName(){
@@ -21,5 +25,11 @@ public abstract class Player{
         return symbol;
     }
 
-    public abstract Move getMove(Scanner scanner);
+    public PlayerType getPlayerType(){
+        return playerType;
+    }
+
+
+    public abstract Move getMove(Board board);
+
 }
