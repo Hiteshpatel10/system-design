@@ -2,27 +2,32 @@ package tictactoe.player;
 
 import tictactoe.model.Move;
 import tictactoe.player.Player;
-import java.util.Random;
 import java.util.Scanner;
 import tictactoe.Board;
 import tictactoe.enums.PlayerType;
+import tictactoe.player.stratergy.BotStrategy;
+import tictactoe.model.Cell;
 
 public class Bot extends Player{
-    public Bot(String name, char symbol){
+
+    BotStrategy[] botStrategy;
+
+    public Bot(String name, char symbol, BotStrategy[] botStrategy){
         super(name, symbol, PlayerType.BOT);
+        this.botStrategy = botStrategy;
     }
 
     @Override
     public Move getMove(Board board) {
 
-        while(true){
-            Random random = new Random();
-            int row = random.nextInt(board.getSize());
-            int col = random.nextInt(board.getSize());
-            if(board.getSymbol(row, col) == '-'){
-                System.out.println(getName() + " is playing " + row + " " + col);
-                return new Move(row, col, this);
+        for(BotStrategy botStrategy : botStrategy){
+            Cell cell = botStrategy.makeMove(board, this);
+            if(cell != null){
+                System.out.println(getName() + " is playing " + cell.getRow() + " " + cell.getCol());
+                return new Move(cell.getRow(), cell.getCol(), this);
             }
         }
+
+        return null;
     }
 }
