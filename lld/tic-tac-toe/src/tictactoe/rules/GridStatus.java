@@ -2,6 +2,10 @@ package tictactoe.rules;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.HashMap;
 import tictactoe.model.Board;
 import tictactoe.model.Cell;
 import tictactoe.model.LineStats;
@@ -43,4 +47,36 @@ public class GridStatus{
         }
         return stats;
     }
+
+    public Cell findForkCell(Board board, char symbol){
+        
+        Set<Cell> cells = findAllForkCells(board, symbol);
+        return cells.isEmpty() ? null : cells.iterator().next();
+    }
+
+    public Set<Cell> findAllForkCells(Board board, char symbol){
+        int size = board.getSize();
+        List<LineStats> stats = getAllLineStats(board);
+        Map<Cell, Integer> threatCount = new HashMap<>();
+
+        for(LineStats stat : stats){
+            // `symbol` is one piece short of a threat here: both empty cells get a vote
+            if(stat.count(symbol) == size - 2 && stat.getEmptyCells().size() == 2){
+                for(Cell cell : stat.getEmptyCells()){
+                    threatCount.merge(cell, 1, Integer::sum);
+                }
+            }
+        }
+
+        // 2+ votes = playing here would give `symbol` two threats at once
+        Set<Cell> cells = new HashSet<>();
+        for(Map.Entry<Cell, Integer> entry : threatCount.entrySet()){
+            if(entry.getValue() >= 2){
+                cells.add(entry.getKey());
+            }
+        }
+
+        return cells;
+    }
+
 }

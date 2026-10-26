@@ -14,16 +14,19 @@ public class Main{
 
         Scanner scanner = new Scanner(System.in);
         GridStatus gridStatus =  new GridStatus();
+
+        Player alice = new Human("Hitesh", 'X', scanner);
+
         BotStrategy[] botStrategy = {
             new WinStrategy(gridStatus),
             new BlockStrategy(gridStatus),
             new ForkStrategy(gridStatus),
+            new BlockForkStrategy(gridStatus, alice),
             new CenterStrategy(),
             new CornerStrategy(),
             new RandomStrategy(),
         };
 
-        Player alice = new Human("Hitesh", 'X', scanner);
         Player bob = new Bot("BOT", 'O', botStrategy);
         Player[] players = new Player[]{alice, bob};
         MoveHistory moves = new MoveHistory();  
