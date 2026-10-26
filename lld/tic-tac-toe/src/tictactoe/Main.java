@@ -15,6 +15,7 @@ public class Main{
         BotStrategy[] botStrategy = {
             new WinStratergy(gridStatus),
             new BlockStratergy(gridStatus),
+            new CenterStratergy(gridStatus),
             new RandomStratergy(),
         };
 
