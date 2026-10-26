@@ -1,5 +1,6 @@
-package tictactoe;
+package tictactoe.rules;
 
+import tictactoe.model.Board;
 import tictactoe.player.Player;
 
 
@@ -7,12 +8,12 @@ public class WinCheck {
 
     private Board board;
 
-    WinCheck(Board board){
+    public WinCheck(Board board){
         this.board = board;
     }
 
 
-    boolean isDraw(){
+    public boolean isDraw(){
         for(int i = 0; i < board.getSize(); i++){
             for(int j = 0; j < board.getSize(); j++){
                 if(board.getSymbol(i, j) == '-'){
@@ -23,7 +24,7 @@ public class WinCheck {
         return true;
     }
 
-    boolean isWinner(Player player){
+    public boolean isWinner(Player player){
         return checkRows(player) || checkColumns(player) || checkDiagonals(player);
     }
 

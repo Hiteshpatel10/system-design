@@ -1,15 +1,14 @@
-package tictactoe;
+package tictactoe.model;
 
 import java.util.Deque;
 import java.util.ArrayDeque;
-import tictactoe.model.Move;
 import tictactoe.player.Player;
 
-public class Moves{
+public class MoveHistory{
 
     private Deque<Move> moves;
 
-    Moves(){
+    public MoveHistory(){
         this.moves = new ArrayDeque<>();
     }
 

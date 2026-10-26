@@ -1,10 +1,11 @@
-package tictactoe;
+package tictactoe.controller;
 
 import tictactoe.enums.GameStatus;
 import java.util.Scanner;
 import tictactoe.player.Player;
 import tictactoe.model.*;
 import tictactoe.enums.PlayerType;
+import tictactoe.rules.WinCheck;
 
 public class GameController{
 
@@ -12,11 +13,11 @@ public class GameController{
     private Player[] player;
     private WinCheck winCheck;
     private GameStatus gameStatus;
-    private Moves moves;
+    private MoveHistory moves;
     private int currentPlayerIdx;
 
 
-    GameController(int size, Player[] player, Moves moves){
+    public GameController(int size, Player[] player, MoveHistory moves){
         this.board = new Board(size);
         this.player = player;
         this.moves = moves;

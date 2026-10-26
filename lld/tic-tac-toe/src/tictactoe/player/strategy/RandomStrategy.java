@@ -1,12 +1,12 @@
-package tictactoe.player.stratergy;
+package tictactoe.player.strategy;
 
 import java.util.Random;
-import tictactoe.Board;
+import tictactoe.model.Board;
 import tictactoe.model.Move;
 import tictactoe.player.Player;
 import tictactoe.model.Cell;
 
-public class RandomStratergy implements BotStrategy{
+public class RandomStrategy implements BotStrategy{
     
     private Random random = new Random();
     @Override

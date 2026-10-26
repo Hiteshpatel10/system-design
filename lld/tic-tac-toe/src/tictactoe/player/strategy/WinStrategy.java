@@ -1,17 +1,17 @@
-package tictactoe.player.stratergy;
+package tictactoe.player.strategy;
 
-import tictactoe.Board;
+import tictactoe.model.Board;
 import tictactoe.player.Player;
 import tictactoe.model.Cell;
 import tictactoe.model.LineStats;
 import java.util.List;
-import tictactoe.GridStatus;
+import tictactoe.rules.GridStatus;
 
-public class WinStratergy implements BotStrategy{
+public class WinStrategy implements BotStrategy{
 
     private GridStatus gridStatus;
 
-    public WinStratergy(GridStatus gridStatus){
+    public WinStrategy(GridStatus gridStatus){
         this.gridStatus = gridStatus;
     }
 

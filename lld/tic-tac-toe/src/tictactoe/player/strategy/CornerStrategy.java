@@ -1,10 +1,10 @@
-package tictactoe.player.stratergy;
+package tictactoe.player.strategy;
 
-import tictactoe.Board;
+import tictactoe.model.Board;
 import tictactoe.player.Player;
 import tictactoe.model.Cell;
 
-public class CornerStratergy implements BotStrategy{
+public class CornerStrategy implements BotStrategy{
 
 
     @Override

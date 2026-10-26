@@ -2,8 +2,10 @@ package tictactoe;
 
 import java.util.*;
 import tictactoe.player.*;
-import tictactoe.player.stratergy.*;
-import tictactoe.GridStatus;
+import tictactoe.player.strategy.*;
+import tictactoe.rules.GridStatus;
+import tictactoe.model.MoveHistory;
+import tictactoe.controller.GameController;
 
 public class Main{
 
@@ -13,18 +15,18 @@ public class Main{
         Scanner scanner = new Scanner(System.in);
         GridStatus gridStatus =  new GridStatus();
         BotStrategy[] botStrategy = {
-            new WinStratergy(gridStatus),
-            new BlockStratergy(gridStatus),
-            new ForkStratergy(gridStatus),
-            new CenterStratergy(),
-            new CornerStratergy(),
-            new RandomStratergy(),
+            new WinStrategy(gridStatus),
+            new BlockStrategy(gridStatus),
+            new ForkStrategy(gridStatus),
+            new CenterStrategy(),
+            new CornerStrategy(),
+            new RandomStrategy(),
         };
 
         Player alice = new Human("Hitesh", 'X', scanner);
         Player bob = new Bot("BOT", 'O', botStrategy);
         Player[] players = new Player[]{alice, bob};
-        Moves moves = new Moves();  
+        MoveHistory moves = new MoveHistory();  
         GameController controller = new GameController(3, players, moves);
 
         controller.start(scanner);

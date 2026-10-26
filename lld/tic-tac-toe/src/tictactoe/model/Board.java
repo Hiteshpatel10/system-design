@@ -1,6 +1,5 @@
-package tictactoe;
+package tictactoe.model;
 
-import tictactoe.model.*;
 import tictactoe.player.Player;
 
 public class Board{
@@ -8,11 +7,11 @@ public class Board{
     private int size;
     private Cell[][] cells;
 
-    Board() {
+    public Board() {
         this(3); 
     }
 
-    Board(int size) {
+    public Board(int size) {
         this.size = size;
         this.cells = loadBoard(size);
     }

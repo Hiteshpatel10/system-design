@@ -1,20 +1,20 @@
-package tictactoe.player.stratergy;
+package tictactoe.player.strategy;
 
-import tictactoe.Board;
+import tictactoe.model.Board;
 import tictactoe.player.Player;
 import tictactoe.model.Cell;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import tictactoe.model.LineStats;
-import tictactoe.GridStatus;
+import tictactoe.rules.GridStatus;
 
 // Blocks the opponent's fork: a cell where one move would create two threats at once
-public class ForkStratergy implements BotStrategy{
+public class ForkStrategy implements BotStrategy{
 
     private GridStatus gridStatus;
 
-    public ForkStratergy(GridStatus gridStatus){
+    public ForkStrategy(GridStatus gridStatus){
         this.gridStatus = gridStatus;
     }
 

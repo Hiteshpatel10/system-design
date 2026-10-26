@@ -3,9 +3,9 @@ package tictactoe.player;
 import tictactoe.model.Move;
 import tictactoe.player.Player;
 import java.util.Scanner;
-import tictactoe.Board;
+import tictactoe.model.Board;
 import tictactoe.enums.PlayerType;
-import tictactoe.player.stratergy.BotStrategy;
+import tictactoe.player.strategy.BotStrategy;
 import tictactoe.model.Cell;
 
 public class Bot extends Player{

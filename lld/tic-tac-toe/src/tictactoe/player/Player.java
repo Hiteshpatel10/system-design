@@ -2,7 +2,7 @@ package tictactoe.player;
 
 import java.util.Scanner; 
 import tictactoe.model.Move;
-import tictactoe.Board;
+import tictactoe.model.Board;
 import tictactoe.enums.PlayerType;
 
 public abstract class Player{

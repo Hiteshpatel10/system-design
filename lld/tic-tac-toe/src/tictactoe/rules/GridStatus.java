@@ -1,7 +1,8 @@
-package tictactoe;
+package tictactoe.rules;
 
 import java.util.ArrayList;
 import java.util.List;
+import tictactoe.model.Board;
 import tictactoe.model.Cell;
 import tictactoe.model.LineStats;
 
