@@ -3,109 +3,28 @@ package tictactoe.player.stratergy;
 import tictactoe.Board;
 import tictactoe.player.Player;
 import tictactoe.model.Cell;
+import tictactoe.model.LineStats;
+import java.util.List;
+import tictactoe.GridStatus;
 
 public class WinStratergy implements BotStrategy{
+
+    private GridStatus gridStatus;
+
+    public WinStratergy(GridStatus gridStatus){
+        this.gridStatus = gridStatus;
+    }
 
     @Override
     public Cell makeMove(Board board, Player player) {
 
-        Cell row = checkRow(board, player);
-        Cell col = checkCol(board, player);
-        Cell diagonal = checkDiagonal(board, player);
+        List<LineStats> stats = gridStatus.getAllLineStats(board);
 
-        if(row != null){
-            return row;
-        }
-        if(col != null){
-            return col;
-        }
-        if(diagonal != null){
-            return diagonal;
+        for(LineStats stat : stats){
+            Cell cell = stat.getCompletingCell(player.getSymbol());
+            if (cell != null) return cell;
         }
 
-        return null;
-    }
-
-    private Cell checkRow(Board board, Player player){
-
-        int size = board.getSize();
-
-        for(int i = 0; i < size; i++){
-            int count = 0;
-            for(int j = 0; j < size; j++){
-                if(board.getSymbol(i, j) == player.getSymbol()){
-                    count++;
-                }
-            }
-            if(count == size - 1){
-                for(int j = 0; j < size; j++){
-                    if(board.getSymbol(i, j) == '-'){
-                        return new Cell(i, j);
-                    }
-                }
-            }
-        }   
-        return null;
-    }
-
-    private Cell checkCol(Board board, Player player){
-
-        int size = board.getSize();
-
-        for(int j = 0; j < size; j++){
-            int count = 0;
-            for(int i = 0; i < size; i++){
-                if(board.getSymbol(i, j) == player.getSymbol()){
-                    count++;
-                }
-            }
-            if(count == size - 1){
-                for(int i = 0; i < size; i++){
-                    if(board.getSymbol(i, j) == '-'){
-                        return new Cell(i, j);
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
-    
-    private Cell checkDiagonal(Board board, Player player){
-
-        int size = board.getSize();
-
-        for(int i = 0; i < size; i++){
-            int count = 0;
-            for(int j = 0; j < size; j++){
-                if(board.getSymbol(i, j) == player.getSymbol()){
-                    count++;
-                }
-            }
-            if(count == size - 1){
-                for(int j = 0; j < size; j++){
-                    if(board.getSymbol(i, j) == '-'){
-                        return new Cell(i, j);
-                    }
-                }
-            }
-        }   
-
-        for(int i = size; i >= 0; i--){
-            int count = 0;
-            for(int j = size; j >= 0; j--){
-                if(board.getSymbol(i, j) == player.getSymbol()){
-                    count++;
-                }
-            }
-            if(count == size - 1){
-                for(int j = size; j >= 0; j--){
-                    if(board.getSymbol(i, j) == '-'){
-                        return new Cell(i, j);
-                    }
-                }
-            }
-        }
         return null;
     }
 }

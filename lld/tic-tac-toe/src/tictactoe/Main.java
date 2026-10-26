@@ -3,6 +3,7 @@ package tictactoe;
 import java.util.*;
 import tictactoe.player.*;
 import tictactoe.player.stratergy.*;
+import tictactoe.GridStatus;
 
 public class Main{
 
@@ -10,10 +11,10 @@ public class Main{
 
 
         Scanner scanner = new Scanner(System.in);
-
+        GridStatus gridStatus =  new GridStatus();
         BotStrategy[] botStrategy = {
-            new WinStratergy(),
-            new BlockStratergy(),
+            new WinStratergy(gridStatus),
+            new BlockStratergy(gridStatus),
             new RandomStratergy(),
         };
 
