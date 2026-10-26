@@ -51,6 +51,7 @@ public class GameController{
         }
 
         if(winCheck.isDraw()){
+            System.out.println("Game Draw!");
             this.gameStatus = GameStatus.DRAW;
             return;
         }
