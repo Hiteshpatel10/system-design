@@ -1,4 +1,4 @@
-package vendingmachine;
+package vendingmachine.model;
 
 public class Product {
     String name;
@@ -9,11 +9,11 @@ public class Product {
         this.price = price;
     }
 
-    public String getProductName(){
+    public String getName(){
         return name;
     }
 
-    public int getProductPrice(){
+    public int getPrice(){
         return price;
     }
 }
