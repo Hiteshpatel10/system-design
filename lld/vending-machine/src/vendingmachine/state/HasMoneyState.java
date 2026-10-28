@@ -31,6 +31,7 @@ public class HasMoneyState implements State{
 
         int price = slot.getProduct().getPrice();
         int moneyInserted = machine.getTotalMoneyInserted();
+        
 
         if(moneyInserted < price){
             System.out.println("Insufficient money : " + (price - moneyInserted) + " more");
@@ -46,6 +47,11 @@ public class HasMoneyState implements State{
 
         machine.setState(DispenseState.getInstance());
         machine.completeSale(slot);
+
+        if(moneyInserted > price){
+            System.out.println("Returning change : " + (moneyInserted - price));
+            machine.returnChange(moneyInserted - price);
+        }
         machine.setState(IdleState.getInstance());
     }
 

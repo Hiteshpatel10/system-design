@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 
 public class CashRegister {
@@ -25,83 +27,68 @@ public class CashRegister {
 
     public void addTransaction(Transaction transaction){
         transactionLog.add(transaction);
-        notes.put(transaction.getCurrency(), notes.getOrDefault(transaction.getValue(), 0) + 1);
-        if(transaction.getDirection() == TransDir.INCOME){
-            balance += transaction.getValue();
-        }else{
-            balance -= transaction.getValue();
+        int delta = transaction.getDirection().getSign();
+        notes.put(transaction.getCurrency(), notes.getOrDefault(transaction.getCurrency(), 0) + delta);
+        balance += transaction.getValue() * delta;
+    }
+
+    public void returnChange(int changeRequired){
+        Map<Currency, Integer> changeGiven = getChange(changeRequired);
+
+        if(changeGiven == null){
+            throw new IllegalStateException("Cannot make change");
+        }
+
+        // One EXPENSE transaction per coin, so a ₹20 change of 2×10 removes both coins
+        for(Map.Entry<Currency, Integer> entry : changeGiven.entrySet()){
+            for(int i = 0; i < entry.getValue(); i++){
+                addTransaction(new Transaction(entry.getKey(), TransDir.EXPENSE));
+            }
         }
     }
 
-    public boolean isChangeAvailable(int changeRequired){
+    public Map<Currency, Integer> getCoins(){
+        return new HashMap<>(notes);
+    }
 
-        Map<Currency, Integer> temp = notes;
-        int amt = changeRequired;
 
-        if(changeRequired < 0) throw new IllegalArgumentException("Invalid change");
-        
-        if(changeRequired == 0) return true;
+    public boolean isChangeAvailable(int changeRequired) {
+        if (changeRequired < 0) throw new IllegalArgumentException("Invalid change");
+        if (changeRequired == 0) return true;
+        if (balance < changeRequired) return false;
 
-        if(balance < changeRequired) return false;
-        
-        while(amt > 0){
+        return getChange(changeRequired) != null;
+    }
 
-            if(temp.isEmpty()) return false;
-            
-            if(Currency.HUNDRED.getValue() <= amt && temp.getOrDefault(Currency.HUNDRED, 0) > 0){
-                
-                temp.put(Currency.HUNDRED, temp.get(Currency.HUNDRED) - 1);
-                amt -= Currency.HUNDRED.getValue();
-                
-            }
-            
-            if(Currency.FIFTY.getValue() <= amt && temp.getOrDefault(Currency.FIFTY, 0) > 0){
-                
-                temp.put(Currency.FIFTY, temp.get(Currency.FIFTY) - 1);
-                amt -= Currency.FIFTY.getValue();
+    // Largest first, built once instead of on every call
+    private static final List<Currency> DENOMINATIONS_DESC = Arrays.stream(Currency.values())
+            .sorted(Comparator.comparingInt(Currency::getValue).reversed())
+            .toList();
 
-            }
-            
-            if(Currency.TWENTY.getValue() <= amt && temp.getOrDefault(Currency.TWENTY, 0) > 0){
-                
-                temp.put(Currency.TWENTY, temp.get(Currency.TWENTY) - 1);
-                amt -= Currency.TWENTY.getValue();
+    // Returns coin -> count for the change, or null if no combination of available coins works
+    private Map<Currency, Integer> getChange(int changeRequired) {
+        return findChange(0, changeRequired);
+    }
 
-            }
-            
-            if(Currency.TEN.getValue() <= amt && temp.getOrDefault(Currency.TEN, 0) > 0){
+    // Backtracking: for the denomination at `index`, decide HOW MANY to use (most first),
+    // then let the smaller denominations cover the rest. If they can't, use one fewer and retry.
+    // Unlike greedy, this finds 3×20 for ₹60 when the register holds {50×1, 20×3}.
+    private Map<Currency, Integer> findChange(int index, int amount) {
+        if (amount == 0) return new HashMap<>();                 // paid in full
+        if (index == DENOMINATIONS_DESC.size()) return null;     // out of coin types, still owe money
 
-                temp.put(Currency.TEN, temp.get(Currency.TEN) - 1);
-                amt -= Currency.TEN.getValue();
-                
-            }
-            
-            if(Currency.FIVE.getValue() <= amt && temp.getOrDefault(Currency.FIVE, 0) > 0){
-                
-                temp.put(Currency.FIVE, temp.get(Currency.FIVE) - 1);
-                amt -= Currency.FIVE.getValue();
+        Currency c = DENOMINATIONS_DESC.get(index);
+        int maxUse = Math.min(notes.getOrDefault(c, 0), amount / c.getValue());
 
-            }
-            
-            if(Currency.TWO.getValue() <= amt && temp.getOrDefault(Currency.TWO, 0) > 0){
-
-                temp.put(Currency.TWO, temp.get(Currency.TWO) - 1);
-                amt -= Currency.TWO.getValue();
-                
-            }
-            
-        
-            if(Currency.ONE.getValue() <= amt && temp.getOrDefault(Currency.ONE, 0) > 0){
-                
-                temp.put(Currency.ONE, temp.get(Currency.ONE) - 1);
-                amt -= Currency.ONE.getValue();
-                
+        for (int use = maxUse; use >= 0; use--) {
+            Map<Currency, Integer> rest = findChange(index + 1, amount - use * c.getValue());
+            if (rest != null) {
+                if (use > 0) rest.put(c, use);
+                return rest;
             }
         }
-
-        return true;
-        
+        return null;
     }
-    
+
 }
 

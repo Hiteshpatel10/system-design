@@ -14,16 +14,28 @@ public class VendingMachine{
 
     private List<Slot> slots;
     private State state;
-    private List<Transaction> transaction;
+    private List<Currency> insertedCurrencies;
     private CashRegister cashRegister;
 
     public VendingMachine(List<Slot> slots, CashRegister cashRegister){
         this.slots = slots;
         this.state = IdleState.getInstance();
         this.cashRegister = cashRegister;
-        this.transaction = new ArrayList<>();
+        this.insertedCurrencies = new ArrayList<>();
     }
 
+
+    public void insertMoney(Currency currency){
+        state.insertMoney(this, currency);
+    }
+
+    public void selectProduct(String slotCode){
+        state.selectProduct(this, slotCode);
+    }
+
+    public void cancel(){
+        state.cancel(this);
+    }
 
     public void setState(State state){
         this.state = state;
@@ -34,16 +46,20 @@ public class VendingMachine{
     }
 
     public void addMoney(Currency currency){
-        transaction.add(new Transaction(currency, TransDir.INCOME));
+        insertedCurrencies.add(currency);
         cashRegister.addTransaction(new Transaction(currency, TransDir.INCOME));
         System.out.println("Current Balance : " + getTotalMoneyInserted());
     }
 
     public void refund(){
-        for(Transaction transaction : transaction){
-            cashRegister.addTransaction(new Transaction(transaction.getCurrency(), TransDir.EXPENSE));
+        for(Currency currency : insertedCurrencies){
+            cashRegister.addTransaction(new Transaction(currency, TransDir.EXPENSE));
         }
-        transaction.clear();
+        insertedCurrencies.clear();
+    }
+
+    public void returnChange(int changeRequired){
+        cashRegister.returnChange(changeRequired);
     }
 
     public boolean isChangeAvailable(int changeRequired){
@@ -61,14 +77,13 @@ public class VendingMachine{
 
     public void completeSale(Slot slot){
         slot.setQuantity(slot.getQuantity() - 1);        
+        insertedCurrencies.clear();
     }
 
     public int getTotalMoneyInserted(){
         int total = 0;
-        for(Transaction transaction : transaction){
-            if(transaction.getDirection() == TransDir.INCOME){
-                total += transaction.getValue();
-            }
+        for(Currency currency : insertedCurrencies){
+            total += currency.getValue();
         }
         return total;
     }
