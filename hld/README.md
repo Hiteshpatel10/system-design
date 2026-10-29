@@ -2,6 +2,7 @@
 
 Each folder has a `PROBLEM.md` (the statement). Write your solution in that folder's `README.md`.
 See [../ROADMAP.md](../ROADMAP.md) for the order to solve them in.
+Study plans for the fundamentals are in [fundamentals/](fundamentals/), starting with [STAGE1_STUDY_PLAN.md](fundamentals/STAGE1_STUDY_PLAN.md).
 
 ## Rules for every HLD problem
 
