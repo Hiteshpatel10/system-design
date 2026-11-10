@@ -5,7 +5,7 @@ import tictactoe.player.Player;
 import tictactoe.model.Cell;
 import tictactoe.rules.GridStatus;
 
-// Blocks the opponent's fork: a cell where one move would create two threats at once
+// Creates our own fork: a cell where one move gives us two threats at once
 public class ForkStrategy implements BotStrategy{
 
     private GridStatus gridStatus;
