@@ -18,6 +18,7 @@ public class Main{
         Player alice = new Human("Hitesh", 'X', scanner);
 
         BotStrategy[] botStrategy = {
+            new MiniMaxStrategy(alice),
             new WinStrategy(gridStatus),
             new BlockStrategy(gridStatus),
             new ForkStrategy(gridStatus),
