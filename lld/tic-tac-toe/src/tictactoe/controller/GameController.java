@@ -71,6 +71,15 @@ public class GameController{
         return player[currentPlayerIdx];
     }
 
+    public GameStatus getGameStatus(){
+        return gameStatus;
+    }
+
+    // the player who made the last move is the winner, since nextPlayer() isn't called after a win
+    public Player getWinner(){
+        return gameStatus == GameStatus.WINNER ? getCurrentPlayer() : null;
+    }
+
     public void start(Scanner scanner){
         System.out.println("U = Undo");
         while(gameStatus == GameStatus.IN_PROGRESS){

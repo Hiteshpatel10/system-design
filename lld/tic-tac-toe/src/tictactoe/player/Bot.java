@@ -23,7 +23,8 @@ public class Bot extends Player{
         for(BotStrategy botStrategy : botStrategy){
             Cell cell = botStrategy.makeMove(board, this);
             if(cell != null){
-                System.out.println(getName() + " is playing " + cell.getRow() + " " + cell.getCol());
+                System.out.println(getName() + " is playing " + cell.getRow() + " " + cell.getCol()
+                        + " (by " + botStrategy.getClass().getSimpleName() + ")");
                 return new Move(cell.getRow(), cell.getCol(), this);
             }
         }
